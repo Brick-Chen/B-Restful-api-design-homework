@@ -3,6 +3,7 @@ package com.thoughtworks.capability.gtb.restfulapidesign.api;
 import com.thoughtworks.capability.gtb.restfulapidesign.dto.GroupDto;
 import com.thoughtworks.capability.gtb.restfulapidesign.service.GroupService;
 import com.thoughtworks.capability.gtb.restfulapidesign.service.StudentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,17 +21,20 @@ public class GroupController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public GroupDto setGroupName(@RequestParam Integer id, @RequestParam String groupName) {
         return groupService.updateGroupName(id, groupName);
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<GroupDto> group() {
         return groupService.groupStudents(new ArrayList<>(studentService.getAllStudents(null)));
     }
 
     @GetMapping("/res")
-    public List<GroupDto> getGroup(@RequestParam Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public List<GroupDto> getGroup(@RequestParam(required = false) Integer id) {
         return groupService.getGroup(id);
     }
 }

@@ -40,4 +40,8 @@ public class GroupRepository {
         return new ArrayList<>(groups.values());
     }
 
+    public int count() {
+        return groups.size();
+    }
+
 }

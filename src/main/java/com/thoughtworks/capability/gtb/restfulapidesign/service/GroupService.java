@@ -42,7 +42,7 @@ public class GroupService {
 
         for(int i = 0; i < remain; ++i) {
             GroupDto groupDto = groupRepository.find(i + 1);
-            List<StudentDto> group = null;
+            List<StudentDto> group;
             if (groupDto == null) {
                 group = new ArrayList<>();
                 groupDto = GroupDto.builder()
@@ -62,11 +62,11 @@ public class GroupService {
     }
 
     public List<GroupDto> getGroup(Integer id) {
-        if (id < GROUP_NUM_MIN || id > GROUP_NUM) {
-            return null;
-        }
         if (id == null) {
             return groupRepository.findAll();
+        }
+        if (id < GROUP_NUM_MIN || id > GROUP_NUM || id > groupRepository.count() || groupRepository.count() == 0) {
+            return null;
         }
         return groupRepository.findAll().subList(id - 1, id);
     }
